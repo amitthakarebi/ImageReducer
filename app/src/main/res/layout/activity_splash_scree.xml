@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    android:background="#A1E0FF"
+    tools:context=".SplashScreen">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="260dp"
+        android:layout_marginTop="@dimen/margin_30"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/splash_logo"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_marginEnd="13sp"
+        android:layout_height="0dp"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aclonica"
+            android:text="Loading..."
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_18"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/developer"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Developed By\nMr. Amit Rajendra Thakare"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_18"
+        android:layout_marginBottom="@dimen/text_20"
+        android:textStyle="bold"
+        />
+
+
+
+</LinearLayout>

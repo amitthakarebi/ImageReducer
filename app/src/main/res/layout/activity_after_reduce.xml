@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".AfterReduce">
+
+
+    <ImageView
+        android:id="@+id/imageViewAfterReduce"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/finishBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginBottom="5dp"
+        android:background="#EA8730"
+        android:text="Save to phone" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#BFBFBF"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="3dp">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/afterReducedBottomAds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_10"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-4970909843127323/9499144594" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
