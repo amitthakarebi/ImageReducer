@@ -50,7 +50,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
-
+//https://youtu.be/82uwhCj3zuI // firebase notification background
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button compressImageBtn, applySettingBtn, selectImgBtn;
@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //this will be called and affective when the notification send with the keys with it means payload or data notifications.
+        handleNotificationData();
 
         givePermissionWrite();
 
@@ -568,5 +571,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Show the Alert Dialog box
             alertDialog.show();
         }
+    }
+
+    private void handleNotificationData()
+    {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle!=null)
+        {
+            if (bundle.containsKey("data1"))
+            {
+                Log.e("Handle Data","Data 1 : "+bundle.getString("data1"));
+            }
+            if (bundle.containsKey("data2"))
+            {
+                Log.e("Handle Data","Data 2 : "+bundle.getString("data2"));
+            }
+        }
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.e("New Intent","New Intent Called");
     }
 }
