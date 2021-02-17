@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
@@ -16,6 +17,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.amitthakare.imagereducer.MainActivity;
 import com.amitthakare.imagereducer.R;
+import com.amitthakare.imagereducer.ScanConstants;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -31,7 +33,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         //upload token to server
         //have to store into preferences for further use
-        Log.d("Token",token);
+        Log.e("Token",token);
     }
 
     //this will handle the notification when app is running
@@ -41,7 +43,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        Log.d("Notification",remoteMessage.getFrom());
+        Log.e("Notification",remoteMessage.getFrom());
 
         //this will create the channel to show the msg if user is active
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -54,7 +56,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String title = remoteMessage.getNotification().getTitle();
             String body = remoteMessage.getNotification().getBody();
 
-            Log.d("Notification","Title : "+title + "  Body : "+body);
+            Log.e("Notification Service","Title : "+title + "  Body : "+body);
             showNotification(title,body);
         }
 
@@ -63,11 +65,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         {
             for (Map.Entry<String,String> entry : remoteMessage.getData().entrySet())
             {
-                Log.e("Handle Data","Key :"+entry.getKey()+"  Value :"+entry.getValue());
+
+                if (entry.getKey().equals("playstore"))
+                {
+                   /* Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(entry.getValue()));
+                    startActivity(intent);*/
+
+                    /*final String appPackageName = entry.getValue();
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("market://details?id=" + appPackageName));
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+
+                    } catch (android.content.ActivityNotFoundException anfe) {
+                        Intent intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent1);
+                    }*/
+
+                    ScanConstants.datakey=entry.getKey();
+                    ScanConstants.datavalue= entry.getValue();
+
+                    Log.e("Handle Data Service","Playstore : "+entry.getValue());
+                }
             }
         }
 
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNotificationChanner()
@@ -96,6 +122,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(1,builder.build());
 
     }
+
+
 
 
 }

@@ -50,6 +50,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+
 //https://youtu.be/82uwhCj3zuI // firebase notification background
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -65,8 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView reduceToolbarIcon;
     File file, OriginalFile;
     int compressQuality = 0, compressSize = 0;
-    boolean isMaintainResolution, isQualityChanged = false, isSizeChanged = false, isSettingApplied = false,checkIfSizeApplied=false;
-    LinearLayout settingLayout, pxHeightLayout, pxWidthLayout, compressSizeLayout,imageViewLayout;
+    boolean isMaintainResolution, isQualityChanged = false, isSizeChanged = false, isSettingApplied = false, checkIfSizeApplied = false;
+    LinearLayout settingLayout, pxHeightLayout, pxWidthLayout, compressSizeLayout, imageViewLayout;
 
     //navigation
     DrawerLayout drawerLayoutMain;
@@ -234,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 child.delete();
         file1.delete();
 
-        MediaScannerConnection.scanFile(this,new String[]{fileNew.getPath()}, new String[]{"image/jpeg"},null);
+        MediaScannerConnection.scanFile(this, new String[]{fileNew.getPath()}, new String[]{"image/jpeg"}, null);
 
         ScanConstants.ReducedFilePath = fileNew.getPath();
 
@@ -265,8 +266,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tempBitmap = getBitmapByUri(originalBitmapUri);
 
         applySizeSetting(isMaintainResolution, pxHeight, pxWidth, compressSize, tempBitmap);
-        if (checkIfSizeApplied)
-        {
+        if (checkIfSizeApplied) {
             tempBitmap3 = null;
             tempBitmap3 = applyQualitySetting(compressQuality);
 
@@ -320,17 +320,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             //create a bitmap and return
             tempBitmap1 = Bitmap.createScaledBitmap(tempBitmap, (int) newWidth, (int) newHeight, true);
-            checkIfSizeApplied=true;
+            checkIfSizeApplied = true;
         } else {
-            if (TextUtils.isEmpty(pxHeight.getText()) && TextUtils.isEmpty(pxWidth.getText()))
-            {
+            if (TextUtils.isEmpty(pxHeight.getText()) && TextUtils.isEmpty(pxWidth.getText())) {
                 Toast.makeText(this, "Insert Height and Width !", Toast.LENGTH_SHORT).show();
-                checkIfSizeApplied=false;
-            }else
-            {
+                checkIfSizeApplied = false;
+            } else {
                 //get the width and height and create a bitmap then return
                 tempBitmap1 = Bitmap.createScaledBitmap(tempBitmap, Integer.parseInt(pxWidth.getText().toString()), Integer.parseInt(pxHeight.getText().toString()), true);
-                checkIfSizeApplied=true;
+                checkIfSizeApplied = true;
             }
         }
 
@@ -504,13 +502,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         int getResult = settingLayout.getVisibility();
 
-        if (getResult==0)
-        {
+        if (getResult == 0) {
             settingLayout.setVisibility(View.GONE);
             imageViewLayout.setVisibility(View.GONE);
             selectImgBtn.setVisibility(View.VISIBLE);
-        }else
-        {
+        } else {
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainActivity.this);
             // Set the message show for the Alert time
             builder.setMessage("Thank you for using our app.\nClick Yes to exit!");
@@ -573,26 +569,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void handleNotificationData()
-    {
-        Bundle bundle = getIntent().getExtras();
-        if (bundle!=null)
+    private void handleNotificationData() {
+
+        if (ScanConstants.datakey.equals("playstore") && ScanConstants.isClicked.equals("Yes"))
         {
-            if (bundle.containsKey("data1"))
-            {
-                Log.e("Handle Data","Data 1 : "+bundle.getString("data1"));
-            }
-            if (bundle.containsKey("data2"))
-            {
-                Log.e("Handle Data","Data 2 : "+bundle.getString("data2"));
+            final String appPackageName = ScanConstants.datavalue;
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+            } catch (android.content.ActivityNotFoundException anfe) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
             }
         }
+
+        Log.e("Handle Data", "Playstore : " + ScanConstants.datavalue);
+        ScanConstants.datavalue="No";
+        ScanConstants.datakey="No";
+        ScanConstants.isClicked="No";
     }
 
-
+    // jevha main activity on asel tevha hai run hote
+    //this will be handle when the ap is already open and user click on the notification.
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.e("New Intent","New Intent Called");
+        Log.e("New Intent", "New Intent Called");
+        ScanConstants.isClicked="Yes";
+        handleNotificationData();
     }
 }

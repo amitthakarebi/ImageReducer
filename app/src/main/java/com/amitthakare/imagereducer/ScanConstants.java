@@ -14,4 +14,8 @@ public class ScanConstants {
 
     public static String ReducedFilePath;
 
+    public static String datakey="No";
+    public static String datavalue="No";
+    public static String isClicked="No";
+
 }
