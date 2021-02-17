@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -20,17 +21,17 @@ public class SplashScreen extends AppCompatActivity {
         handleNotificationData();
 
         //For Not to have Status Bar
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        // For Splash Time and After that to move main activity
-        new Handler().postDelayed(new Runnable() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent homeIntent = new Intent(SplashScreen.this, Slider.class);
                 startActivity(homeIntent);
                 finish();
             }
-        },splash_time);
+        }, 3000);
+
+        // For Splash Time and After that to move main activity
+        
 
     }
 

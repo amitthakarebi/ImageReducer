@@ -61,11 +61,12 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="channel_id" />
 
-        <service android:name=".Background.MyFirebaseMessagingService"
+        <service
+            android:name=".Background.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
